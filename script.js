@@ -4,8 +4,9 @@ let messageTag=document.createElement("h1");
 let daysTag = document.getElementById('dias');
 let hoursTag = document.getElementById('horas');
 let minsTag = document.getElementById('minutos');
+let divMain= document.getElementById("divMain");
 
-let currentDate = new Date(2024,1,14);/*Se obtiene la fecha actual */
+let currentDate = new Date();/*Se obtiene la fecha actual */
 let birtdDayDate = new Date(2024,1,14); // Año, mes (enero==0), día, hora, minutos¡
 let days, hours, mins, totalSeconds;
 
@@ -16,7 +17,7 @@ countdown();
 
 
 function countdown() {
-  currentDate = new Date(2024,1,14);//se actualiza la fecha actual
+  currentDate = new Date();//se actualiza la fecha actual
   totalSeconds = (birtdDayDate- currentDate) / 1000;
 
   if (Math.floor(totalSeconds) <= 0) {
@@ -40,6 +41,7 @@ function showSeason(){
   let currentMonth = currentDate.getMonth();
   if (currentMonth >= 8 && currentMonth <= 10) {
     body.style.backgroundImage= "URL('pictures/autumn.jpg')";
+    divMain.style.backgroundImage="URL('pictures/lluvia.gif')";
     body.style.color="rgb(255,255,255)";
     console.log("autum");
   } else if (currentMonth >= 11 || currentMonth <= 1) {
@@ -59,6 +61,7 @@ function showSeason(){
 function showMessage() {
   divDate.classList.toggle("hide");
   body.style.backgroundImage= "URL('pictures/birthday.jpg')";
+  
   body.style.color="rgb(255,255,255)";
   messageTag.innerText="¡FELICIDADES!";
   body.appendChild(messageTag);
