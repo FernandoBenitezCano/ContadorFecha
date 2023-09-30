@@ -6,9 +6,12 @@ let daysTag = document.getElementById('dias');
 let hoursTag = document.getElementById('horas');
 let minsTag = document.getElementById('minutos');
 let divMain= document.getElementById("divMain");
+let goalYear = 1998;
+let goalMonth = 1;
+let goalDay= 14;
 
 let currentDate = new Date();/*Se obtiene la fecha actual */
-let birtdDayDate = new Date(2024,1,14); // Año, mes (enero==0), día, hora, minutos¡
+let birtdDayDate = new Date(goalYear,goalMonth,goalDay); // Año, mes (enero==0), día, hora, minutos¡
 let days, hours, mins, totalSeconds;
 
 //Crea un intervalo que llama a la función cada seAgundo
@@ -18,6 +21,9 @@ countdown();
 
 
 function countdown() {
+  if (birtdDayDate.getTime()<currentDate.getTime()) {
+    birtdDayDate.setFullYear(currentDate.getFullYear()+1);
+  }
   currentDate = new Date();//se actualiza la fecha actual
   totalSeconds = (birtdDayDate- currentDate) / 1000;
 
