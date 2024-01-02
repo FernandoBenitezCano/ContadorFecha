@@ -1,35 +1,40 @@
 let body = document.getElementsByTagName("body")[0];
-let divDate=document.getElementById("countdownBday");
-let title=document.getElementById("title");
-let messageTag=document.createElement("h1");
+let divDate = document.getElementById("countdownBday");
+let title = document.getElementById("title");
+let messageTag = document.createElement("h1");
 let daysTag = document.getElementById('dias');
 let hoursTag = document.getElementById('horas');
 let minsTag = document.getElementById('minutos');
-let divMain= document.getElementById("divMain");
+let divMain = document.getElementById("divMain");
 let goalYear = 1998;
-let goalMonth = 1;
-let goalDay= 14;
+let goalMonth = 1; // Cambiado a 1 para representar febrero
+let goalDay = 14;
 
-let currentDate = new Date();/*Se obtiene la fecha actual */
-let birtdDayDate = new Date(goalYear,goalMonth,goalDay); // Año, mes (enero==0), día, hora, minutos¡
+let currentDate = new Date(); // Se obtiene la fecha actual
+let birtdDayDate = new Date(currentDate.getFullYear(), goalMonth, goalDay); // Año actual, mes (enero==0), día, hora, minutos
 let days, hours, mins, totalSeconds;
 
-//Crea un intervalo que llama a la función cada seAgundo
-let countdownInterval = setInterval(countdown, 1000);//con intervalo se llama a una funcion cada X tiempo especificado en ms
+// Crea un intervalo que llama a la función cada segundo
+let countdownInterval = setInterval(countdown, 1000); // Con intervalo se llama a una función cada X tiempo especificado en ms
 showSeason();
 countdown();
 
-
 function countdown() {
-  if (birtdDayDate.getTime()<currentDate.getTime()) {
-    birtdDayDate.setFullYear(currentDate.getFullYear()+1);
-  }
-  currentDate = new Date();//se actualiza la fecha actual
-  totalSeconds = (birtdDayDate- currentDate) / 1000;
+  currentDate = new Date(); // Actualiza la fecha actual
 
-  if (Math.floor(totalSeconds) <= 0) {
+  // Verifica si la fecha actual ha superado la fecha objetivo
+  if (currentDate.getTime() > birtdDayDate.getTime()) {
+    birtdDayDate.setFullYear(currentDate.getFullYear() + 1);
+  }
+
+  // Calculate the total seconds correctly
+  totalSeconds = Math.floor((birtdDayDate - currentDate) / 1000);
+
+  if (totalSeconds <= 0) {
     showMessage();
-    secondsElement.innerHTML = 0;
+    daysTag.innerHTML = 0;
+    hoursTag.innerHTML = 0;
+    minsTag.innerHTML = 0;
     return;
   }
 
@@ -40,37 +45,34 @@ function countdown() {
   daysTag.innerHTML = days;
   hoursTag.innerHTML = hours;
   minsTag.innerHTML = mins;
-};
+}
 
-
-function showSeason(){
-
+function showSeason() {
   let currentMonth = currentDate.getMonth();
   if (currentMonth >= 8 && currentMonth <= 10) {
-    body.style.backgroundImage= "URL('pictures/autumn.jpg')";
-    body.style.color="rgb(255,255,255)";
+    body.style.backgroundImage = "URL('pictures/autumn.jpg')";
+    body.style.color = "rgb(255,255,255)";
     console.log("autum");
   } else if (currentMonth >= 11 || currentMonth <= 1) {
-    body.style.backgroundImage= "URL('pictures/winter.jpg')";
+    body.style.backgroundImage = "URL('pictures/winter.jpg')";
     console.log("winter");
-    body.style.color="rgb(255, 255, 0)";
+    body.style.color = "rgb(255, 255, 0)";
   } else if (currentMonth >= 2 && currentMonth <= 4) {
-    body.style.backgroundImage= "URL('pictures/spring.jpg')";
+    body.style.backgroundImage = "URL('pictures/spring.jpg')";
     console.log("spring");
   } else {
-    body.style.backgroundImage= "URL('pictures/summer.jpg')";
-    body.style.color="rgb(255, 111, 5)";
+    body.style.backgroundImage = "URL('pictures/summer.jpg')";
+    body.style.color = "rgb(255, 111, 5)";
     console.log("summer");
   }
-  
 }
 
 function showMessage() {
   divDate.classList.toggle("hide");
-  body.style.backgroundImage= "URL('pictures/birthday.jpg')";
+  body.style.backgroundImage = "URL('pictures/birthday.jpg')";
   title.classList.toggle("hide");
-  body.style.color="rgb(255,255,255)";
-  messageTag.innerText="¡FELICIDADES!";
+  body.style.color = "rgb(255,255,255)";
+  messageTag.innerText = "¡FELICIDADES!";
   body.appendChild(messageTag);
   clearInterval(countdownInterval);
 }
